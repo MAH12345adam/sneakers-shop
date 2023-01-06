@@ -1,53 +1,37 @@
 import React from "react";
 
-const Cart = () => {
+const Cart = ({ onCloseCart, cartItems }) => {
   return (
-    <div style={{ display: "none" }} className="overlay">
+    <div className="overlay">
       <div className="drawer">
         <h2 className="mb-30 d-flex justify-between align-center">
           Корзина{" "}
-          <img className="cu-p" src="/images/btn-remove.svg" alt="remove" />
+          <img
+            onClick={onCloseCart}
+            className="cu-p"
+            src="/images/btn-remove.svg"
+            alt="remove"
+          />
         </h2>
 
         <div className="cartItems flex">
-          <div className="cartItem d-flex align-center">
-            <div className="cartItemImage"></div>
-            <div className="mr-20 flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b>12 999 руб.</b>
+          {cartItems.map((obj) => (
+            <div className="cartItem d-flex align-center">
+              <div
+                style={{ backgroundImage: `url(${obj.img})` }}
+                className="cartItemImage"
+              ></div>
+              <div className="mr-20 flex">
+                <p className="mb-5">{obj.title}</p>
+                <b>{obj.price} руб.</b>
+              </div>
+              <img
+                className="removeBtn"
+                src="/images/btn-remove.svg"
+                alt="remove"
+              />
             </div>
-            <img
-              className="removeBtn"
-              src="/images/btn-remove.svg"
-              alt="remove"
-            />
-          </div>
-
-          <div className="cartItem d-flex align-center">
-            <div className="cartItemImage"></div>
-            <div className="mr-20 flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b>12 999 руб.</b>
-            </div>
-            <img
-              className="removeBtn"
-              src="/images/btn-remove.svg"
-              alt="remove"
-            />
-          </div>
-
-          <div className="cartItem d-flex align-center">
-            <div className="cartItemImage"></div>
-            <div className="mr-20 flex">
-              <p className="mb-5">Мужские Кроссовки Nike Air Max 270</p>
-              <b>12 999 руб.</b>
-            </div>
-            <img
-              className="removeBtn"
-              src="/images/btn-remove.svg"
-              alt="remove"
-            />
-          </div>
+          ))}
         </div>
 
         <div className="cartTotalBlock">
