@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "../components/Card";
+import AppContext from "../context";
 
 const Home = ({
   searchValue,
@@ -9,6 +10,21 @@ const Home = ({
   onAddToCart,
   onAddToFavorite,
 }) => {
+  const { isLoading } = React.useContext(AppContext);
+
+  const renderItems = () => {
+    const filtredItems = items.filter((item) =>
+      item.title.toLowerCase().includes(searchValue.toLowerCase())
+    );
+    return (isLoading ? [...Array(8)] : filtredItems).map((item, index) => (
+      <Card
+        key={index}
+        onFavorite={(obj) => onAddToFavorite(obj)}
+        onPlus={(obj) => onAddToCart(obj)}
+        {...item}
+      />
+    ));
+  };
   return (
     <div className="content p-40">
       <div className="d-flex justify-between align-center mb-40">
@@ -30,20 +46,7 @@ const Home = ({
           />
         </div>
       </div>
-      <div className="d-flex flex-wrap">
-        {items
-          .filter((item) =>
-            item.title.toLowerCase().includes(searchValue.toLowerCase())
-          )
-          .map((item) => (
-            <Card
-              key={item.id}
-              onPlus={(obj) => onAddToCart(obj)}
-              onFavorite={(obj) => onAddToFavorite(obj)}
-              {...item}
-            />
-          ))}
-      </div>
+      <div className="d-flex flex-wrap">{renderItems()}</div>
     </div>
   );
 };
